@@ -56,8 +56,9 @@ function create() {
   this.add.image(200, 300, 'star');
   this.add.image(300, 300, 'star');
   this.add.image(400, 200, 'star');
+
   
-  player = this.physics.add.sprite(100,450,'dude');
+player = this.physics.add.sprite(100,450,'dude');
 player.setBounce(0.2);
 player.setCollideWorldBounds (true);
 this.anims.create({
@@ -83,40 +84,50 @@ stars = this.physics.add.group({
   repeat: 11,
   setXY: {x: 12,y:0, stepX: 70}
 });
+stars.children.iterate(function(child){
+  child.setBounceY(Phaser.Math.FloatBetween(0.4,0.8))
+});
+}
 this.physics.add.collider(player,platforms);
-cursors = this.input.keyboard.createCursorKeys();
 this.physics.add.collider(stars, platforms);
 this.physics.add.overlap(player, stars, collectStar, null, this);
-player.body.setGravityY(300)
-}
 
 
 
 
-function update ()
+/*const centerX = width / 2;
+  const centerY = height / 2;
+  const welcomeMessage = `Welcome to Phaser ${pkg.version}`;
+
+  this.add.image(centerX, centerY * 1.2, 'study');
+
+  this.add
+    .text(centerX, centerY * 0.8, welcomeMessage, { font: "bold 19px Arial", fill: "#fff" })
+    .setOrigin(0.5, 0.5);*/
+
+    function update ()
     {
       if (cursors.left.isDown)
-      {
-      player.setVelocityX(-160);
-      player.anims.play('left', true);
-      }
-      else if (cursors.right.isDown)
-      {
-      player.setVelocityX(160);
-      player.anims.play('right', true);
-      }
-      else
-      {
-      player.setVelocityX(0);
-      player.anims.play('turn');
-      }
-      if (cursors.up.isDown && player.body.touching.down)
-      {
-      player.setVelocityY(-330);
-      }
-      function collectStar(player, star) { 
-        star.disableBody (true, true);
-      }
+    {
+    player.setVelocityX(-160);
+    player.anims.play('left', true);
     }
-
+    else if (cursors.right.isDown)
+    {
+    player.setVelocityX(160);
+    player.anims.play('right', true);
+    }
+    else
+    {
+    player.setVelocityX(0);
+    player.anims.play('turn');
+    }
+    if (cursors.up.isDown && player.body.touching.down)
+    {
+    player.setVelocityY(-330);
+    }
+    function collectStar(player, star) { 
+      star.disableBody (true, true);
+    }
+    }
     
